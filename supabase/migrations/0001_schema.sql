@@ -15,7 +15,7 @@ create table public.workshops (
   audience        workshop_audience not null,
   tagline         text,
   description     text,
-  duration_label  text not null default '2-3 hours',
+  duration_label  text not null default '3 hours',
   price           numeric(10,2) not null default 199,
   created_at      timestamptz not null default now()
 );

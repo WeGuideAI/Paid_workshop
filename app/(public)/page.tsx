@@ -336,7 +336,7 @@ export default function HomePage() {
                   {/* Meta info */}
                   <div className="flex items-center gap-4 text-xs text-[var(--text-muted)] mb-6 pb-6 border-b border-[var(--border-glass)]">
                     <span className="flex items-center gap-1">
-                      <Clock size={14} /> 2–3 hrs
+                      <Clock size={14} /> 3 hrs
                     </span>
                     <span className="flex items-center gap-1 font-semibold text-[#4DA3FF]">
                       <IndianRupee size={14} /> 199
@@ -377,7 +377,7 @@ export default function HomePage() {
                 <span className="gradient-text">Get Started?</span>
               </h2>
               <p className="text-[var(--text-muted)] max-w-xl mx-auto mb-8 text-lg">
-                A 2–3 hour workshop for just ₹199 — that&apos;s less than a
+                A 3 hour workshop for just ₹199 — that&apos;s less than a
                 coffee subscription and more valuable than months of wondering
                 what AI means for your future.
               </p>

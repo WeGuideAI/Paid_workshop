@@ -5,7 +5,7 @@ import { WorkshopDetail } from "@/components/WorkshopDetail";
 export const metadata: Metadata = {
   title: "Prompting + Digital Portfolio Development — For Students",
   description:
-    "Master AI prompting fundamentals and build your own AI-assisted digital portfolio. A 2–3 hour hands-on workshop for students at just ₹199.",
+    "Master AI prompting fundamentals and build your own AI-assisted digital portfolio. A 3 hour hands-on workshop for students at just ₹199.",
 };
 
 export default function StudentsWorkshopPage() {

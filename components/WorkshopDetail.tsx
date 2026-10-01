@@ -84,7 +84,7 @@ export function WorkshopDetail({
                 <div className="flex flex-wrap items-center gap-6 text-sm text-[var(--text-muted)] mb-8">
                   <span className="flex items-center gap-2">
                     <Clock size={18} className="text-[var(--ocean-500)]" />
-                    2–3 Hours
+                    3 Hours
                   </span>
                   <span className="flex items-center gap-2">
                     <Wifi size={18} className="text-[var(--ocean-500)]" />
@@ -207,7 +207,7 @@ export function WorkshopDetail({
                 <span className="gradient-text">AI Journey?</span>
               </h2>
               <p className="text-[var(--text-muted)] mb-8">
-                Just ₹199 for a 2–3 hour workshop. No login required —
+                Just ₹199 for a 3 hour workshop. No login required —
                 register with your email and you&apos;re in.
               </p>
               <Link href={`/register?role=${role}`}>

@@ -5,7 +5,7 @@ import { WorkshopDetail } from "@/components/WorkshopDetail";
 export const metadata: Metadata = {
   title: "AI Literacy + Real-Time Use Cases — For Parents",
   description:
-    "Understand what AI actually is, explore everyday use cases, learn to keep your child safe online, and see how AI impacts education. A 2–3 hour workshop for parents at just ₹199.",
+    "Understand what AI actually is, explore everyday use cases, learn to keep your child safe online, and see how AI impacts education. A 3 hour workshop for parents at just ₹199.",
 };
 
 export default function ParentsWorkshopPage() {

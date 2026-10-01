@@ -5,7 +5,7 @@ import { WorkshopDetail } from "@/components/WorkshopDetail";
 export const metadata: Metadata = {
   title: "Integration of AI in School Life — For Teachers",
   description:
-    "Discover how to use AI for lesson planning, assessment, differentiated instruction, and admin tasks. A 2–3 hour workshop for teachers at just ₹199.",
+    "Discover how to use AI for lesson planning, assessment, differentiated instruction, and admin tasks. A 3 hour workshop for teachers at just ₹199.",
 };
 
 export default function TeachersWorkshopPage() {
