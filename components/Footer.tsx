@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Phone, Mail, Globe, MapPin, Star, ShieldCheck, Heart } from "lucide-react";
+import { Phone, Mail, Globe, MapPin, Star } from "lucide-react";
 
 export function Footer() {
   const [clickCount, setClickCount] = useState(0);
@@ -108,18 +108,7 @@ export function Footer() {
 
         {/* Bottom Section */}
         <div className="mt-16 pt-8 border-t border-[var(--border-glass)]">
-          {/* Trust & Community Banner */}
-          <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-            <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
-              <ShieldCheck size={16} className="text-emerald-400 shrink-0" />
-              <span>Community Educational Initiative by WeGuide AI • 100% Free Entry</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-sm text-[var(--text-muted)]">
-              <span>Crafted with</span>
-              <Heart size={14} className="text-rose-500 fill-rose-500" />
-              <span>for Palakkad & Kerala Tech Community</span>
-            </div>
-          </div>
+
 
           {/* Copyright & Disclaimer */}
           <div className="text-center max-w-4xl mx-auto space-y-4">
