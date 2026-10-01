@@ -6,8 +6,11 @@ export const getConnectionString = (): string => {
   if (process.env.DATABASE_URL) return process.env.DATABASE_URL;
   if (process.env.POSTGRES_URL) return process.env.POSTGRES_URL;
   if (process.env.STORAGE_DATABASE_URL) return process.env.STORAGE_DATABASE_URL;
+  if (process.env.storage_DATABASE_URL) return process.env.storage_DATABASE_URL;
   if (process.env.STORAGE_POSTGRES_URL) return process.env.STORAGE_POSTGRES_URL;
+  if (process.env.storage_POSTGRES_URL) return process.env.storage_POSTGRES_URL;
   if (process.env.STORAGE_URL) return process.env.STORAGE_URL;
+  if (process.env.storage_URL) return process.env.storage_URL;
   if (process.env.POSTGRES_PRISMA_URL) return process.env.POSTGRES_PRISMA_URL;
 
   // Fallback: search all env vars for any postgres connection string
