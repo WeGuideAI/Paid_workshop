@@ -1,15 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
-  Sparkles,
   GraduationCap,
   Users,
   BookOpen,
   Clock,
-  Wifi,
   IndianRupee,
   Zap,
   ShieldAlert,
@@ -165,7 +162,7 @@ export default function HomePage() {
                   ✦ 100% Beginner Friendly (No Coding)
                 </span>
                 <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-medium border border-white/10 bg-white/5 text-slate-200">
-                  ✦ Orchid Mall, Palakkad
+                  ✦ Verified Certification
                 </span>
               </div>
             </ScrollReveal>

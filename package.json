@@ -7,12 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "db:migrate": "node scripts/migrate.mjs"
   },
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@supabase/supabase-js": "^2.117.2",
     "jose": "^6.2.12",
     "lightningcss": "^1.33.0",

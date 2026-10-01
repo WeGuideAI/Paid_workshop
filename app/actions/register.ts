@@ -1,6 +1,6 @@
 "use server";
 
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { sql } from "@/lib/db";
 import {
   studentSchema,
   parentSchema,
@@ -39,19 +39,20 @@ export async function registerUser(formData: unknown): Promise<RegisterResult> {
       teacher: "teachers",
     };
 
-
     const targetSlug = slugMap[role] || "students";
 
     // Look up the workshop by slug
-    let { data: workshop, error: workshopError } = await supabaseAdmin
-      .from("workshops")
-      .select("id")
-      .eq("slug", targetSlug)
-      .maybeSingle();
+    const workshops = await sql`
+      SELECT id FROM workshops WHERE slug = ${targetSlug} LIMIT 1
+    `;
+    let workshopId = workshops[0]?.id;
 
     // Auto-seed missing workshop if database table exists but isn't seeded yet
-    if (!workshop) {
-      const defaultWorkshops: Record<string, { slug: string; title: string; audience: "student" | "parent" | "teacher"; tagline: string; description: string }> = {
+    if (!workshopId) {
+      const defaultWorkshops: Record<
+        string,
+        { slug: string; title: string; audience: string; tagline: string; description: string }
+      > = {
         students: {
           slug: "students",
           title: "Prompting + Digital Portfolio Development",
@@ -77,65 +78,63 @@ export async function registerUser(formData: unknown): Promise<RegisterResult> {
 
       const seedInfo = defaultWorkshops[targetSlug];
       if (seedInfo) {
-        const { data: upserted, error: upsertError } = await supabaseAdmin
-          .from("workshops")
-          .upsert(seedInfo, { onConflict: "slug" })
-          .select("id")
-          .single();
-
-        if (!upsertError && upserted) {
-          workshop = upserted;
-        } else {
-          console.error("Auto-seed workshop error:", upsertError);
-        }
+        const upserted = await sql`
+          INSERT INTO workshops (slug, title, audience, tagline, description)
+          VALUES (
+            ${seedInfo.slug},
+            ${seedInfo.title},
+            ${seedInfo.audience}::workshop_audience,
+            ${seedInfo.tagline},
+            ${seedInfo.description}
+          )
+          ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title
+          RETURNING id
+        `;
+        workshopId = upserted[0]?.id;
       }
     }
 
-    if (!workshop) {
-      console.error("Workshop error:", workshopError);
-      return { success: false, error: "Workshop not found. Please ensure SQL migrations are run in your Supabase SQL Editor." };
+    if (!workshopId) {
+      return {
+        success: false,
+        error: "Workshop not found. Please ensure database tables are created in Neon.",
+      };
     }
 
-    // Build the insert payload
-    const insertData: Record<string, unknown> = {
-      workshop_id: workshop.id,
-      role: role,
-      full_name: validated.fullName,
-      email: validated.email,
-      phone: validated.phone,
-      mode: validated.mode,
-      amount: 199,
-      payment_status: "pending",
-    };
+    const inserted = await sql`
+      INSERT INTO registrations (
+        workshop_id, role, full_name, email, phone, mode,
+        student_school_name, student_standard,
+        has_school_child, child_name, child_standard, child_school_name,
+        teacher_school_name, teacher_subject,
+        amount, payment_status
+      ) VALUES (
+        ${workshopId}::uuid,
+        ${role}::workshop_audience,
+        ${validated.fullName as string},
+        ${validated.email as string},
+        ${validated.phone as string},
+        ${(validated.mode as string) || "online"}::session_mode,
+        ${role === "student" ? (validated.studentSchoolName as string) || null : null},
+        ${role === "student" ? (validated.studentStandard as string) || null : null},
+        ${role === "parent" ? (validated.hasSchoolChild as boolean) ?? null : null},
+        ${role === "parent" && validated.hasSchoolChild ? (validated.childName as string) || null : null},
+        ${role === "parent" && validated.hasSchoolChild ? (validated.childStandard as string) || null : null},
+        ${role === "parent" && validated.hasSchoolChild ? (validated.childSchoolName as string) || null : null},
+        ${role === "teacher" ? (validated.teacherSchoolName as string) || null : null},
+        ${role === "teacher" ? (validated.teacherSubject as string) || null : null},
+        199,
+        'pending'::payment_status
+      )
+      RETURNING id
+    `;
 
-    // Role-specific fields
-    if (role === "student") {
-      insertData.student_school_name = validated.studentSchoolName;
-      insertData.student_standard = validated.studentStandard;
-    } else if (role === "parent") {
-      insertData.has_school_child = validated.hasSchoolChild;
-      if (validated.hasSchoolChild) {
-        insertData.child_name = validated.childName;
-        insertData.child_standard = validated.childStandard;
-        insertData.child_school_name = validated.childSchoolName;
-      }
-    } else if (role === "teacher") {
-      insertData.teacher_school_name = validated.teacherSchoolName;
-      insertData.teacher_subject = validated.teacherSubject;
+    const registrationId = inserted[0]?.id;
+    if (!registrationId) {
+      return { success: false, error: "Failed to create registration record." };
     }
 
-    const { data: registration, error: insertError } = await supabaseAdmin
-      .from("registrations")
-      .insert(insertData)
-      .select("id")
-      .single();
-
-    if (insertError) {
-      console.error("Registration insert error:", insertError);
-      return { success: false, error: "Failed to create registration: " + (insertError.message || "Database error") };
-    }
-
-    return { success: true, registrationId: registration.id };
+    return { success: true, registrationId };
   } catch (error) {
     if (error instanceof z.ZodError) {
       const firstError = error.issues?.[0];
@@ -153,20 +152,13 @@ export async function submitPayment(
   try {
     paymentSchema.parse({ transactionId });
 
-
-    const { error } = await supabaseAdmin
-      .from("registrations")
-      .update({
-        transaction_id: transactionId,
-        payment_status: "submitted",
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", registrationId);
-
-    if (error) {
-      console.error("Payment update error:", error);
-      return { success: false, error: "Failed to submit payment. Please try again." };
-    }
+    await sql`
+      UPDATE registrations
+      SET transaction_id = ${transactionId},
+          payment_status = 'submitted'::payment_status,
+          updated_at = NOW()
+      WHERE id = ${registrationId}::uuid
+    `;
 
     return { success: true };
   } catch (error) {
@@ -174,6 +166,7 @@ export async function submitPayment(
       const firstError = error.issues?.[0];
       return { success: false, error: firstError?.message || "Validation failed" };
     }
+    console.error("Payment update error:", error);
     return { success: false, error: "An unexpected error occurred." };
   }
 }

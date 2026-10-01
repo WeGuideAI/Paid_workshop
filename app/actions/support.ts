@@ -1,6 +1,6 @@
 "use server";
 
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { sql } from "@/lib/db";
 import { supportSchema } from "@/lib/validations/registration";
 import { z } from "zod";
 
@@ -9,23 +9,17 @@ export async function submitSupportRequest(formData: unknown) {
     const raw = formData as Record<string, unknown>;
     const validated = supportSchema.parse(raw);
 
-    const { error } = await supabaseAdmin.from("support_requests").insert({
-      name: validated.name,
-      email: validated.email,
-      message: validated.message,
-      status: "open",
-    });
-
-    if (error) {
-      console.error("Support insert error:", error);
-      return { success: false, error: "Failed to submit request. Please try again." };
-    }
+    await sql`
+      INSERT INTO support_requests (name, email, message, status)
+      VALUES (${validated.name}, ${validated.email}, ${validated.message}, 'open')
+    `;
 
     return { success: true };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { success: false, error: error.issues[0]?.message || "Validation failed" };
     }
-    return { success: false, error: "An unexpected error occurred." };
+    console.error("Support insert error:", error);
+    return { success: false, error: "Failed to submit request. Please try again." };
   }
 }

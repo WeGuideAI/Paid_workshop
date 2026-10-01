@@ -86,10 +86,10 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Lab & Workshop Venue (4 columns) */}
+          {/* Column 3: WeGuide Robotics Lab & Center (4 columns) */}
           <div id="venue" className="md:col-span-6 lg:col-span-4 scroll-mt-28">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-6">
-              Lab & Workshop Venue
+              WeGuide Robotics Lab & Center
             </h4>
             <div className="flex items-start gap-3 text-sm text-[var(--text-muted)] mb-4">
               <MapPin size={18} className="text-[var(--ocean-500)] shrink-0 mt-0.5" />
@@ -128,7 +128,7 @@ export function Footer() {
               </Link>
               <span className="hidden sm:inline-block opacity-50">•</span>
               <Link href="/support" className="hover:text-[var(--ocean-500)] transition-colors">
-                Venue &amp; FAQ
+                FAQs &amp; Support
               </Link>
             </div>
           </div>

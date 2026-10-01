@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Eye, BrainCircuit, Zap, Cpu, Activity, Server, Target } from "lucide-react";
-import { GlassCard } from "./ui/GlassCard";
+import { Eye, BrainCircuit, Zap, Cpu, Activity, Server } from "lucide-react";
 import { ScrollReveal } from "./ui/AnimatedBackground";
 
 const stages = [

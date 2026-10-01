@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,40 +12,43 @@ const navLinks = [
   { href: "/workshops/parents", label: "Parents" },
   { href: "/workshops/teachers", label: "Teachers" },
   { href: "/about", label: "Curriculum" },
-  { href: "/support", label: "Venue & FAQ" },
+  { href: "/support", label: "FAQs & Support" },
 ];
+
+const subscribeTheme = (callback: () => void) => {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+};
+
+const getThemeSnapshot = (): "dark" | "light" => {
+  return (localStorage.getItem("theme") as "dark" | "light") || "dark";
+};
+
+const getThemeServerSnapshot = (): "dark" | "light" => {
+  return "dark";
+};
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [clickTimer, setClickTimer] = useState<NodeJS.Timeout | null>(null);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, getThemeServerSnapshot);
   const router = useRouter();
 
   useEffect(() => {
-    // Read theme preference on mount
-    const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
-    setTheme(savedTheme);
-    if (savedTheme === "light") {
+    if (theme === "light") {
       document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
     } else {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
     }
-  }, []);
+  }, [theme]);
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
-    setTheme(nextTheme);
     localStorage.setItem("theme", nextTheme);
-    if (nextTheme === "light") {
-      document.documentElement.classList.add("light");
-      document.documentElement.classList.remove("dark");
-    } else {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    }
+    window.dispatchEvent(new Event("storage"));
   };
 
   const handleLogoClick = (e: React.MouseEvent) => {

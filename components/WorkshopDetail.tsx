@@ -5,11 +5,9 @@ import {
   ArrowRight,
   ArrowLeft,
   Clock,
-  Wifi,
+  Sparkles,
   IndianRupee,
   CheckCircle2,
-  Sparkles,
-  type LucideIcon,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GradientButton } from "@/components/ui/GradientButton";
@@ -31,7 +29,6 @@ interface WorkshopDetailProps {
 }
 
 export function WorkshopDetail({
-  slug,
   role,
   title,
   audience,
@@ -87,8 +84,8 @@ export function WorkshopDetail({
                     3 Hours
                   </span>
                   <span className="flex items-center gap-2">
-                    <Wifi size={18} className="text-[var(--ocean-500)]" />
-                    Online or Offline
+                    <Sparkles size={18} className="text-[var(--ocean-500)]" />
+                    Interactive Cohort
                   </span>
                   <span className="flex items-center gap-2 font-semibold text-[var(--foam-400)]">
                     <IndianRupee size={18} />

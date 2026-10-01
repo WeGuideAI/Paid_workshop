@@ -9,12 +9,7 @@ import { GradientButton } from "@/components/ui/GradientButton";
 import { Stepper } from "@/components/ui/Stepper";
 import { QRCodeDisplay } from "@/components/ui/QRCodeDisplay";
 import { ScrollReveal } from "@/components/ui/AnimatedBackground";
-import {
-  studentSchema,
-  parentSchema,
-  teacherSchema,
-  paymentSchema,
-} from "@/lib/validations/registration";
+import { paymentSchema } from "@/lib/validations/registration";
 import { registerUser, submitPayment } from "@/app/actions/register";
 
 const steps = ["Role", "Details", "Specifics", "Payment"];

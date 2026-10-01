@@ -13,7 +13,6 @@ export function Stepper({ steps, currentStep }: StepperProps) {
       {steps.map((label, index) => {
         const isCompleted = index < currentStep;
         const isActive = index === currentStep;
-        const isPending = index > currentStep;
 
         return (
           <div key={label} className="flex items-center flex-1 last:flex-none">

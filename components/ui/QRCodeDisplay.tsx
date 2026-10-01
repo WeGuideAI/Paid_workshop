@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import QRCode from "qrcode";
 
 interface QRCodeDisplayProps {
@@ -33,12 +34,13 @@ export function QRCodeDisplay({ value, size = 200 }: QRCodeDisplayProps) {
 
   return (
     <div className="inline-block p-4 rounded-xl bg-[rgba(255,255,255,0.06)] border border-[var(--border-glass)]">
-      <img
+      <Image
         src={src}
         alt="Payment QR Code"
         width={size}
         height={size}
         className="rounded-lg"
+        unoptimized
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { sql } from "@/lib/db";
 import { Users, CreditCard, Laptop, BookOpen, IndianRupee } from "lucide-react";
 import { StatCard } from "@/components/ui/StatCard";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -7,18 +7,22 @@ import { GlassCard } from "@/components/ui/GlassCard";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
-  const { data, error } = await supabaseAdmin.rpc("fn_registration_stats");
-
-  let stats = data;
-
-  if (error || !data) {
-    console.error("Failed to fetch dashboard stats, using dummy data for demo:", error);
-    stats = [
-      { workshop_slug: "students", role: "student", mode: "online", payment_status: "verified", total: 45 },
-      { workshop_slug: "parents", role: "parent", mode: "online", payment_status: "submitted", total: 20 },
-      { workshop_slug: "teachers", role: "teacher", mode: "offline", payment_status: "verified", total: 35 },
-      { workshop_slug: "students", role: "student", mode: "offline", payment_status: "pending", total: 15 },
-    ];
+  let stats: unknown[] = [];
+  try {
+    stats = await sql`
+      SELECT 
+        w.slug AS workshop_slug,
+        r.role::text,
+        r.mode::text,
+        r.payment_status::text,
+        COUNT(*)::int AS total
+      FROM registrations r
+      JOIN workshops w ON w.id = r.workshop_id
+      GROUP BY w.slug, r.role, r.mode, r.payment_status
+    `;
+  } catch (error) {
+    console.error("Failed to fetch dashboard stats:", error);
+    stats = [];
   }
   const typedStats = stats as {
     workshop_slug: string;
@@ -31,7 +35,6 @@ export default async function AdminDashboardPage() {
   let totalRegistrations = 0;
   let onlineCount = 0;
   let offlineCount = 0;
-  let pendingCount = 0;
   let verifiedCount = 0;
   let submittedCount = 0;
   let revenue = 0;
@@ -43,7 +46,6 @@ export default async function AdminDashboardPage() {
     if (row.mode === "online") onlineCount += row.total;
     else offlineCount += row.total;
     
-    if (row.payment_status === "pending") pendingCount += row.total;
     if (row.payment_status === "submitted") submittedCount += row.total;
     if (row.payment_status === "verified") {
       verifiedCount += row.total;

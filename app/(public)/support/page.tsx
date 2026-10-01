@@ -13,9 +13,8 @@ import {
   ChevronDown,
   Clock,
   Sparkles,
-  Wifi,
-  Car,
-  CheckCircle2,
+  Award,
+  Users,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GradientButton } from "@/components/ui/GradientButton";
@@ -32,16 +31,16 @@ const faqs = [
     a: "No prior technical or coding experience is required! The sessions are 100% beginner-friendly, taught in simple, accessible language with live practical demonstrations.",
   },
   {
-    q: "Where is the workshop venue located?",
-    a: "All sessions are conducted in-person at the WeGuide Robotics Lab, 2nd Floor, Orchid Mall, 966 National Highway, Sekharipuram, Kalpathy, Palakkad, Kerala — 678003.",
+    q: "Where and how is the workshop conducted?",
+    a: "Workshop delivery details, format, and access instructions are scheduled and coordinated per batch. Confirmed participants receive complete onboarding details and instructions prior to their scheduled session.",
   },
   {
     q: "Who can attend the workshops?",
     a: "We have three tailored tracks: School Students (Grade 6–12 & college), Parents (focused on digital safety and everyday AI), and Teachers (focused on lesson planning and workload reduction).",
   },
   {
-    q: "What should I bring to the workshop?",
-    a: "Just bring your enthusiasm to learn! You can also bring your laptop, tablet, or smartphone if you would like to follow along and test live prompts during the session. High-speed Wi-Fi is provided.",
+    q: "What should I have ready for the workshop?",
+    a: "Just bring your enthusiasm to learn! Having a smartphone, tablet, or laptop ready is recommended if you would like to follow along and test live interactive prompts during the session.",
   },
   {
     q: "Will I receive a certificate of participation?",
@@ -98,14 +97,13 @@ export default function SupportPage() {
         <div className="text-center pt-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-xs font-semibold text-[#4DA3FF] mb-5">
             <Sparkles size={14} />
-            <span>VENUE, FAQ &amp; SUPPORT HUB</span>
+            <span>INFO, FAQ &amp; SUPPORT HUB</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-display)] mb-4 text-white">
-            Workshop Venue &amp; <span className="gradient-text">FAQs</span>
+            Workshop Info &amp; <span className="gradient-text">FAQs</span>
           </h1>
           <p className="text-[var(--text-muted)] text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-            Find complete location directions, batch timings, answers to common
-            questions, and direct support for your workshop registration.
+            Find batch details, answers to common questions, location information, and direct support for your workshop registration.
           </p>
         </div>
       </ScrollReveal>
@@ -119,10 +117,10 @@ export default function SupportPage() {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-[var(--text-primary)]">
-                Lab &amp; Workshop Venue
+                WeGuide Center &amp; Lab Location
               </h2>
               <p className="text-xs sm:text-sm text-[var(--text-muted)]">
-                In-person hands-on training center in Palakkad
+                Robotics lab and headquarters in Palakkad
               </p>
             </div>
           </div>
@@ -149,19 +147,19 @@ export default function SupportPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[var(--text-muted)]">
                     <Clock size={16} className="text-[#087CF4] shrink-0" />
-                    <span>3-Hour Interactive Sessions</span>
+                    <span>3-Hour Guided Sessions</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[var(--text-muted)]">
-                    <Wifi size={16} className="text-[#087CF4] shrink-0" />
-                    <span>High-Speed Wi-Fi Provided</span>
+                    <Sparkles size={16} className="text-[#087CF4] shrink-0" />
+                    <span>Hands-On Interactive AI</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[var(--text-muted)]">
-                    <Car size={16} className="text-[#087CF4] shrink-0" />
-                    <span>Mall Parking on NH 966</span>
+                    <Users size={16} className="text-[#087CF4] shrink-0" />
+                    <span>Expert Mentor Interaction</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs sm:text-sm text-[var(--text-muted)]">
-                    <CheckCircle2 size={16} className="text-[#087CF4] shrink-0" />
-                    <span>Live Hardware Demonstrations</span>
+                    <Award size={16} className="text-[#087CF4] shrink-0" />
+                    <span>Verified Certificate of Completion</span>
                   </div>
                 </div>
 
@@ -200,15 +198,15 @@ export default function SupportPage() {
                 <div className="rounded-2xl p-5 bg-[#0a1122]/90 border border-blue-500/20 flex flex-col justify-between h-full space-y-4">
                   <div className="space-y-2">
                     <span className="text-xs uppercase font-bold tracking-wider text-slate-400">
-                      Landmark &amp; Transit
+                      Center Location &amp; Directions
                     </span>
                     <p className="text-sm text-slate-300 leading-relaxed">
-                      Conveniently located directly along the Palakkad Highway (NH 966) at Orchid Mall, easily accessible via bus and local transit from Kalpathy and Palakkad Town.
+                      Conveniently located along Palakkad Highway (NH 966) at Orchid Mall, easily accessible via bus and local transit from Kalpathy and Palakkad Town.
                     </p>
                   </div>
                   <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
                     <p className="text-xs text-blue-200">
-                      💡 <strong>Tip for attendees:</strong> Please arrive 10 minutes prior to your batch start time for registration desk check-in.
+                      💡 <strong>Tip for attendees:</strong> Please be ready 10 minutes prior to your scheduled batch start time for check-in and onboarding. Specific session format and access details are sent directly to registered participants.
                     </p>
                   </div>
                   <Link href="/register">

@@ -2,7 +2,7 @@
 
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/ui/AnimatedBackground";
-import { Briefcase, Code, TerminalSquare, Compass, Cpu, TrendingUp } from "lucide-react";
+import { Briefcase, TerminalSquare, Compass, Cpu, TrendingUp } from "lucide-react";
 
 const careers = [
   {

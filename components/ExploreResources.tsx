@@ -6,7 +6,7 @@ import { ScrollReveal } from "@/components/ui/AnimatedBackground";
 import {
   Sparkles, ShieldCheck, Briefcase,
   GraduationCap, Users, BookOpen,
-  Brain, Zap, Target, ArrowRight, ChevronDown,
+  ArrowRight, ChevronDown,
   EyeOff, Scale, UserX, AlertTriangle,
   TerminalSquare, Compass, Cpu,
 } from "lucide-react";

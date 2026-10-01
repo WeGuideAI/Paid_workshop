@@ -69,7 +69,7 @@ export function RealWorldApps() {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {applications.map((app, index) => (
+          {applications.map((app) => (
             <ScrollReveal key={app.title}>
               <GlassCard hover className="h-full relative overflow-hidden group">
                 <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${app.gradient} opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 rounded-bl-full`} />

@@ -51,7 +51,7 @@ export default function AISafetyPage() {
         </ScrollReveal>
 
         <div className="space-y-6">
-          {ethicsPrinciples.map((principle, idx) => (
+          {ethicsPrinciples.map((principle) => (
             <ScrollReveal key={principle.title}>
               <GlassCard hover className="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start border-[rgba(244,63,94,0.1)] hover:border-[rgba(244,63,94,0.3)]">
                 <div className={`p-4 rounded-2xl bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.05)] ${principle.color} shrink-0`}>
