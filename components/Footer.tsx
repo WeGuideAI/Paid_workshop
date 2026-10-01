@@ -87,7 +87,7 @@ export function Footer() {
           </div>
 
           {/* Column 3: Lab & Workshop Venue (4 columns) */}
-          <div className="md:col-span-6 lg:col-span-4">
+          <div id="venue" className="md:col-span-6 lg:col-span-4 scroll-mt-28">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-6">
               Lab & Workshop Venue
             </h4>
@@ -100,7 +100,12 @@ export function Footer() {
                 <p>Palakkad, Kerala — 678003</p>
               </div>
             </div>
-            <a href="#" className="inline-flex text-xs font-semibold text-[var(--ocean-500)] hover:text-[var(--foam-400)] transition-colors mt-2 ml-7">
+            <a
+              href="https://maps.google.com/?q=Orchid+Mall+Sekharipuram+Kalpathy+Palakkad+Kerala+678003"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex text-xs font-semibold text-[var(--ocean-500)] hover:text-[var(--foam-400)] transition-colors mt-2 ml-7"
+            >
               Get Directions on Google Maps →
             </a>
           </div>
@@ -120,6 +125,10 @@ export function Footer() {
               <span className="hidden sm:inline-block opacity-50">•</span>
               <Link href="/about" className="hover:text-[var(--ocean-500)] transition-colors">
                 About WE Guide
+              </Link>
+              <span className="hidden sm:inline-block opacity-50">•</span>
+              <Link href="/support" className="hover:text-[var(--ocean-500)] transition-colors">
+                Venue &amp; FAQ
               </Link>
             </div>
           </div>
