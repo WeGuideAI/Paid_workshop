@@ -23,7 +23,6 @@ import {
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { ScrollReveal } from "@/components/ui/AnimatedBackground";
-import { InteractiveStages } from "@/components/InteractiveStages";
 import { RealWorldApps } from "@/components/RealWorldApps";
 import { ExploreResources } from "@/components/ExploreResources";
 
@@ -222,8 +221,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════ AI EMBODIED INTERACTIVE ═══════ */}
-      <InteractiveStages />
 
       {/* ═══════ WHY AI LITERACY MATTERS ═══════ */}
       <section className="py-24 px-4 bg-[var(--bg-alt)] relative">
