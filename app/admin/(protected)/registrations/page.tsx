@@ -53,7 +53,6 @@ export default function RegistrationsPage() {
       Phone: r.phone,
       Role: r.role,
       Workshop: r.workshops?.title,
-      Mode: r.mode,
       PaymentStatus: r.payment_status,
       TransactionID: r.transaction_id || 'N/A',
       Amount: r.amount,
@@ -152,7 +151,6 @@ export default function RegistrationsPage() {
               <th>Date</th>
               <th>Name & Contact</th>
               <th>Role / Workshop</th>
-              <th>Mode</th>
               <th>Payment Info</th>
               <th>Status</th>
               <th>Actions</th>
@@ -161,13 +159,13 @@ export default function RegistrationsPage() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={7} className="text-center py-8 text-[var(--text-muted)]">
+                <td colSpan={6} className="text-center py-8 text-[var(--text-muted)]">
                   Loading registrations...
                 </td>
               </tr>
             ) : filteredRegistrations.length === 0 ? (
               <tr>
-                <td colSpan={7} className="text-center py-8 text-[var(--text-muted)]">
+                <td colSpan={6} className="text-center py-8 text-[var(--text-muted)]">
                   No registrations found matching your filters.
                 </td>
               </tr>
@@ -188,9 +186,6 @@ export default function RegistrationsPage() {
                     <div className="text-xs text-[var(--text-muted)] truncate max-w-[200px]" title={reg.workshops?.title}>
                       {reg.workshops?.title}
                     </div>
-                  </td>
-                  <td>
-                    <span className="capitalize text-sm">{reg.mode}</span>
                   </td>
                   <td>
                     <div className="text-sm">₹{reg.amount}</div>
