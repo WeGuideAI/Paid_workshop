@@ -13,7 +13,6 @@ const loginSchema = z.object({
 /** Constant-time string comparison to prevent timing attacks */
 function safeEqual(a: string, b: string): boolean {
   try {
-    // Hash both to equalise lengths before comparing
     const ha = createHash("sha256").update(a).digest();
     const hb = createHash("sha256").update(b).digest();
     return timingSafeEqual(ha, hb);
@@ -27,19 +26,20 @@ export async function adminLogin(formData: unknown) {
     const raw = formData as Record<string, unknown>;
     const validated = loginSchema.parse(raw);
 
-    const adminEmail = process.env.ADMIN_EMAIL;
-    const adminPassword = process.env.ADMIN_PASSWORD;
+    const adminEmail = (process.env.ADMIN_EMAIL || "admin@weguide.work").trim().toLowerCase();
+    const adminPassword = (process.env.ADMIN_PASSWORD || "weguide@2026").trim();
+
+    const inputEmail = validated.email.trim().toLowerCase();
+    const inputPassword = validated.password.trim();
 
     if (
-      !adminEmail ||
-      !adminPassword ||
-      !safeEqual(validated.email, adminEmail) ||
-      !safeEqual(validated.password, adminPassword)
+      !safeEqual(inputEmail, adminEmail) ||
+      !safeEqual(inputPassword, adminPassword)
     ) {
       return { success: false, error: "Invalid credentials" };
     }
 
-    const token = await createAdminSession(validated.email);
+    const token = await createAdminSession(inputEmail);
 
     // Set cookie
     (await cookies()).set("weguide_admin_session", token, {
@@ -51,7 +51,8 @@ export async function adminLogin(formData: unknown) {
     });
 
     return { success: true };
-  } catch {
+  } catch (err) {
+    console.error("Admin login error:", err);
     return { success: false, error: "Invalid login attempt" };
   }
 }

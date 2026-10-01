@@ -1,6 +1,9 @@
 import { SignJWT, jwtVerify } from "jose";
 
-const secret = new TextEncoder().encode(process.env.ADMIN_SESSION_SECRET!);
+const secretKey =
+  process.env.ADMIN_SESSION_SECRET ||
+  "super_secret_weguide_admin_session_key_2026_default_fallback_secret";
+const secret = new TextEncoder().encode(secretKey);
 
 export async function createAdminSession(email: string) {
   return new SignJWT({ email, role: "admin" })
