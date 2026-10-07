@@ -9,7 +9,7 @@ import { GradientButton } from "@/components/ui/GradientButton";
 import { Stepper } from "@/components/ui/Stepper";
 import { QRCodeDisplay } from "@/components/ui/QRCodeDisplay";
 import { ScrollReveal } from "@/components/ui/AnimatedBackground";
-import { paymentSchema } from "@/lib/validations/registration";
+import { paymentSchema, phoneValidation } from "@/lib/validations/registration";
 import { registerUser, submitPayment } from "@/app/actions/register";
 
 const steps = ["Role", "Details", "Specifics", "Payment"];
@@ -69,7 +69,7 @@ function RegistrationWizard() {
         const schema = z.object({
           fullName: z.string().min(2, "Enter your full name"),
           email: z.string().email("Enter a valid email"),
-          phone: z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"),
+          phone: phoneValidation,
         });
         schema.parse({ fullName, email, phone });
         return true;
@@ -269,8 +269,11 @@ function RegistrationWizard() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="input-glass"
-                    placeholder="10-digit mobile number"
+                    placeholder="e.g. +1 555-0199 or 9876543210"
                   />
+                  <p className="text-xs text-[var(--text-muted)] mt-1.5">
+                    Accepts international numbers with country code (e.g. +1, +44, +971, +91)
+                  </p>
                 </div>
               </div>
             )}
@@ -392,8 +395,11 @@ function RegistrationWizard() {
                   </p>
                 </div>
 
-                <div className="flex justify-center">
-                  <QRCodeDisplay value={`upi://pay?pa=weguide@upi&pn=WeGuide&am=199&cu=INR&tn=Workshop for ${fullName}`} />
+                <div className="flex flex-col items-center justify-center">
+                  <QRCodeDisplay src="/qr.png" size={240} />
+                  <p className="text-xs text-[var(--text-muted)] mt-3">
+                    UPI ID: <span className="text-[var(--text-primary)] font-mono font-medium select-all">akhil.m2k@oksbi</span>
+                  </p>
                 </div>
 
                 <div className="max-w-xs mx-auto">

@@ -1,9 +1,25 @@
 import { z } from "zod";
 
+// International phone number validation:
+// Accepts numbers worldwide with optional country code (+), digits, spaces, hyphens, parentheses, and dots.
+// Validates total digit count to be between 7 and 15 according to ITU-T E.164.
+export const phoneValidation = z
+  .string()
+  .trim()
+  .min(1, "Phone number is required")
+  .regex(
+    /^\+?[0-9\s\-().]{7,25}$/,
+    "Enter a valid phone number (e.g. +1 555-0199 or +91 98765 43210)"
+  )
+  .refine((val) => {
+    const digits = val.replace(/\D/g, "");
+    return digits.length >= 7 && digits.length <= 15;
+  }, "Phone number must contain between 7 and 15 digits");
+
 const base = z.object({
   fullName: z.string().min(2, "Enter your full name"),
   email: z.string().email("Enter a valid email"),
-  phone: z.string().regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"),
+  phone: phoneValidation,
   mode: z.enum(["online", "offline"]),
 });
 
