@@ -49,8 +49,9 @@ export function QRCodeDisplay({
         src={activeSrc}
         alt={alt}
         width={size}
-        height={Math.round(size * (373 / 334))}
+        height={Math.round(size * (1176 / 1016))}
         className="rounded-xl object-contain mx-auto"
+        style={{ height: "auto" }}
         priority
       />
     </div>
